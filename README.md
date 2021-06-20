@@ -6,6 +6,6 @@ Group project made in the context of TU Delft's CS4065 Multimedia Search and Rec
 
 Team 8:
 - Shreyan Biswas
-- Member 2
+- Caroline Freyer
 - Member 3
 - Stefan Petrescu
