@@ -15,7 +15,7 @@
 ## Website
 Visit: [https://movie-night-recommendation.herokuapp.com](https://movie-night-recommendation.herokuapp.com) <br>
 `1. Note that it might take some time for the Heroku application to load, please be patient.` <br>
-`2. Note that it takes approximately 50 seconds for the recommendations to be returned, please be patient.`
+`2. Note that it takes approximately 50 seconds for the recommendations to be returned.`
 
 ## Project setup
 1. `git clone https://github.com/GroupMovieRec/group-movie-recommendation.git`
