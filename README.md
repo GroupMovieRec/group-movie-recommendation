@@ -12,26 +12,28 @@
   </p>
 </div>
 
-### Website
+## Website
 Visit: [https://movie-night-recommendation.herokuapp.com](https://movie-night-recommendation.herokuapp.com) <br>
 `Please note that it might take some time for the Heroku application to load, so please be patient.`
 
-### Project setup
+## Project setup
 1. `git clone https://github.com/GroupMovieRec/group-movie-recommendation.git`
 2. `cd group-movie-recommendation`
 3. `python app.py`
-4. Open browser at the respective address. **(Chrome recommended)** <br> For example, that address might look something like: `http://0.0.0.0:5000/` 
+4. Open browser at the respective address. **(Chrome or Firefox recommended)** <br> For example, that address might look something like: `http://0.0.0.0:5000/`.
 
-`Work in progress...`
+## Testing setup
+In the `testing/` folder you'll be able to find all necessary files in order to run the tests for comparing our method's performance.
+- `testing_group_differences.py` and `testing_method_comparison.py` import `nmf.py`, `rdfnmf.py`, and `rdfnmf_updated.py`.
+- `nmf.py` is by created by Hung-Hsuan Chen <hhchen1105@gmail.com>.
+- `rdfnmf.py` and `rdfnmf_updated.py` are heavily modified by us, but are based on Hung-Hsuan Chen's work.
+- In the testing files you can change the 50 iterations to something less. When you create the models by initialising and declaring a class for the different methods you can also reset the n_epochs to something less than 50.
 
-### Testing setup
-`Work in progress...`
+## Acknowledgements
+- We would like to thank the authors of Movinder for publishing the code for their application, as a part of that has been the baseline for our user-interface. If you’re curious about the [Movinder](movinder.herokuapp.com/) project, make sure to check them out their [GitHub repository](https://github.com/Movinder).
 
-### Acknowledgements
-`Work in progress...`
-
-### Information
-Group project made in the context of TU Delft's CS4065 Multimedia Search and Recommendation.
+## Information
+Group project created in the context of TU Delft's CS4065 Multimedia Search and Recommendation.
 
 Team 8:
 - Shreyan Biswas
