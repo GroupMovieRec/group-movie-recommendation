@@ -41,3 +41,5 @@ Team 8:
 - Caroline Freyer
 - Francesca Drummer
 - Stefan Petrescu
+
+Video presentation can be watched [here](https://www.youtube.com/watch?v=twg5SDrTw3U).
