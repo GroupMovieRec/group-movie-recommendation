@@ -9,5 +9,5 @@ Please note that it might take some time for the Heroku application to load. Ple
 Team 8:
 - Shreyan Biswas
 - Caroline Freyer
-- Member 3
+- Francesca Drummer
 - Stefan Petrescu
