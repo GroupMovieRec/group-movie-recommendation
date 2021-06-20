@@ -1,0 +1,17 @@
+<div class="row">
+
+    {% for i in range(9 if settings.recommendation|length >9 else settings.recommendation|length) %}
+    <div class="col-sm-4">
+        <div class="card" style="background-color: rgba(202, 0, 0, 0.61); margin-top: 3vh;">
+            <div class="card-body" align="center">
+                <h6 class="card-title text-white">{{ settings.recommendation[i][0].title() }}</h6>
+                <img class="rounded mx-auto d-block" src="{{settings.recommendation[i][1]}}" onerror="this.onerror=null; this.src='../static/img/no-poster.jpg'" alt="" width="80px" height="100px">
+                <br/> <br/>
+                <h6 class="card-text">Match Score: {{ "%.2f"|format(settings.recommendation[i][2]) }}</h6>
+                <!-- <a href="#" class="btn btn-primary">Watch it !</a> -->
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
