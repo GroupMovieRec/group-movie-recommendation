@@ -27,6 +27,9 @@ Visit: [https://movie-night-recommendation.herokuapp.com](https://movie-night-re
 ### Testing setup
 `Work in progress...`
 
+### Acknowledgements
+`Work in progress...`
+
 ### Information
 Group project made in the context of TU Delft's CS4065 Multimedia Search and Recommendation.
 
