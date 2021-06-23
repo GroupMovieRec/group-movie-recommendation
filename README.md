@@ -31,7 +31,7 @@ In the `testing/` folder you'll be able to find all necessary files in order to 
 - In the testing files you can change the 50 iterations to something less. When you create the models by initialising and declaring a class for the different methods you can also reset the n_epochs to something less than 50.
 
 ## Acknowledgements
-- We would like to thank the authors of Movinder for publishing the code for their application, as a part of that has been the baseline for our user-interface. If you’re curious about the [Movinder](movinder.herokuapp.com/) project, make sure to check them out their [GitHub repository](https://github.com/Movinder).
+- We would like to thank the authors of Movinder for publishing the code for their application, as a part of that has been the baseline for our user-interface. If you’re curious about the [Movinder](http://movinder.herokuapp.com) project, make sure to check them out their [GitHub repository](https://github.com/Movinder).
 - We would also like the thank Chen & Chen for publishing their code for the RDFNMF, as this was the baseline for our weighted matrix factorisation implementation. If you are interest in there work, check out their [GitHub repository](https://github.com/ncu-dart/rdf) for their [paper](https://dl.acm.org/doi/10.1145/3285954). 
 
 ## Project Report
