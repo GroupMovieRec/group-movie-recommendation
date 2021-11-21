@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, session, jsonify
 import numpy as np
 import pandas as pd
 from surprise import NMF, Dataset, Reader
@@ -38,22 +38,25 @@ DATA_DIR = "static/data"
 # new_friend_id = len(friends)
 
 #TUD data directory
-DATA = "tud_small_movie_lens_data"
+DATA = os.getcwd() + "/src/tud_small_movie_lens_data"
+DATA_POSTERS = os.getcwd() + "/src/tud_poster_data"
+
+print(os.getcwd())
 
 #weighted MF data => small Movielens dataset
 columns = ["movieId", "title", "genres"]
 rdfmf_movies = pd.read_csv(f"{DATA}/movies.csv", names=columns)
-rdmf_posters = pd.read_csv(f"tud_poster_data/posters.csv", names=columns)
+rdmf_posters = pd.read_csv(f"{DATA_POSTERS}/posters.csv", names=columns)
 
 a = pd.read_csv(f"{DATA}/movies.csv", names=columns)
-b = pd.read_csv(f"tud_poster_data/posters.csv", names=columns)
+b = pd.read_csv(f"{DATA_POSTERS}/posters.csv", names=columns)
 b = b.dropna(axis=1)
 merged_a_b = a.merge(b, on='movieId')
 merged_a_b = merged_a_b.rename(columns={"movieId": "movieId", "title_x": "title", "genres_x": "genres", "title_y": "imdbId", "genres_y": "posterUrl"})
 
 # dataframe that contains "famous" movies => this tackles the problem of prompting unkown movies to users
 # to see how many popular movies are currently chosen for the initial 15 ratings check the number of entries in popular_movies/popular_movie_ids.csv
-POPULAR_MOVIES_IDS_PATH = "popular_movies/popular_movie_ids.csv"
+POPULAR_MOVIES_IDS_PATH = os.getcwd() + "/src/popular_movies/popular_movie_ids.csv"
 
 def get_popular_movies():
 	list_popular_movies_ids = []
@@ -334,6 +337,10 @@ def main():
 @app.route('/static/<path:path>')
 def serve_dist(path):
 	return send_from_directory('static', path)
+
+@app.route('/')
+def index():
+    return "Test 1"
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 5000))
