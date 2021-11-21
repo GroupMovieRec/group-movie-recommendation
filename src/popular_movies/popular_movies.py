@@ -4,43 +4,52 @@ import imdb
 import csv
 from operator import itemgetter
 from difflib import SequenceMatcher
-   
+
 ia = imdb.IMDb()
 ours = []
 SMALL_MOVIELENS_PATH = "../tud_small_movie_lens_data/movies.csv"
 top_movies = []
 
-with open('top_1000_IMDB_movies.csv', 'r') as f:
+with open("top_1000_IMDB_movies.csv", "r") as f:
     reader = csv.reader(f)
     for row in reader:
-        if row[2] == 'year':
+        if row[2] == "year":
             continue
         elif int(row[2]) >= 2019:
             continue
-        else: top_movies.append([row[1].lower(), row[2]])
+        else:
+            top_movies.append([row[1].lower(), row[2]])
+
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
+
 movie_titles = []
-with open(SMALL_MOVIELENS_PATH, 'r') as f:
+with open(SMALL_MOVIELENS_PATH, "r") as f:
     reader = csv.reader(f)
     for row in reader:
         if row[1] == "title":
             continue
         try:
-            movie_titles.append([row[1].split(" (")[0].lower().replace(",", ""), int(row[1][-5:].split(")")[0]), row[0]])
-        except(Exception):
+            movie_titles.append(
+                [
+                    row[1].split(" (")[0].lower().replace(",", ""),
+                    int(row[1][-5:].split(")")[0]),
+                    row[0],
+                ]
+            )
+        except (Exception):
             continue
 print("Number of movies in dataset: ", len(movie_titles))
 
 # order movie titles by their ids
-movie_titles = sorted(movie_titles, key=itemgetter(2)) 
+movie_titles = sorted(movie_titles, key=itemgetter(2))
 
-with open('popular_movie_ids.csv', 'w') as f:
+with open("popular_movie_ids.csv", "w") as f:
     # create the csv writer
     writer = csv.writer(f)
-    row = ['movieId']
+    row = ["movieId"]
     # write a row to the csv file
     writer.writerow(row)
 
@@ -55,7 +64,7 @@ for movie in top_movies:
             print("Count:", count, "Match", similarity, movie, title, "Id: ", title[2])
             numOfFamousMovies += 1
             row = [title[2]]
-            with open('popular_movie_ids.csv', 'a') as f:
+            with open("popular_movie_ids.csv", "a") as f:
                 # create the csv writer
                 writer = csv.writer(f)
                 # write a row to the csv file
