@@ -19,7 +19,7 @@ from csv import reader
 
 import shutil
 
-from weighted_matrix_factorization.weighted_mf import weighted_mf
+from src.weighted_matrix_factorization import weighted_mf
 
 
 app = Flask(__name__, template_folder="templates")

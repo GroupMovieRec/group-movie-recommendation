@@ -1,5 +1,5 @@
-from app import index
+from src.app import index
 
 
-def test_index(app, client):
+def test_index():
     assert index() == "Test 1"

@@ -1,4 +1,4 @@
-from weighted_matrix_factorization import rdfnmf_updated
+from src.weighted_matrix_factorization import rdfnmf_updated
 import numpy as np
 
 PATH_TO_USER_RATINGS = "./data_tu_delft"
