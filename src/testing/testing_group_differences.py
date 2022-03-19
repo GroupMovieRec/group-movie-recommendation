@@ -5,22 +5,29 @@ import rdfnmf_updated
 import random
 import numpy as np
 
-'''
+"""
     Split datasets into test set and training set with a 20-80 split. Trains RDFNMFPlus model for five different 
     groups and compute RMSE for all users and only for users in focus group. 
-'''
+"""
 
 
 def run_weighted_nmf():
     # Split for movielens dataset
     movielens_ratings = read_file("training_ratings.csv")
 
-    test_data_indices = random.sample(range(len(movielens_ratings)), 2 * len(movielens_ratings) // 10)
+    test_data_indices = random.sample(
+        range(len(movielens_ratings)), 2 * len(movielens_ratings) // 10
+    )
     test_data = [movielens_ratings[i] for i in test_data_indices]
     training_data = list(set(movielens_ratings) - set(test_data))
 
-    names = ["our_ratings/1_all_average.csv", "our_ratings/2_all_active.csv", "our_ratings/3_all_inactive.csv",
-             "our_ratings/4_mix_12active_12inactive.csv", "our_ratings/5_mix_3active_1inactive.csv"]
+    names = [
+        "our_ratings/1_all_average.csv",
+        "our_ratings/2_all_active.csv",
+        "our_ratings/3_all_inactive.csv",
+        "our_ratings/4_mix_12active_12inactive.csv",
+        "our_ratings/5_mix_3active_1inactive.csv",
+    ]
     rmses = {}
 
     for name in names:
@@ -39,7 +46,9 @@ def run_weighted_nmf():
         m = len(items)
 
         # Create and train RDFNMFPlus model
-        model2 = rdfnmf_updated.RDFNMFPLus(n_users_train=n_train, n_items=m, n_users_our=n_ours)
+        model2 = rdfnmf_updated.RDFNMFPLus(
+            n_users_train=n_train, n_items=m, n_users_our=n_ours
+        )
         model2.train(ratings_train=training_data, ratings_ours=our_ratings)
 
         # Predict values for all test set.
@@ -49,7 +58,10 @@ def run_weighted_nmf():
         predicted_ours_2 = model2.predict(test_data_ours)
 
         # Compute RMSEs.
-        rmses[name] = [compute_rmse(test_data, predicted_2), compute_rmse(test_data_ours, predicted_ours_2)]
+        rmses[name] = [
+            compute_rmse(test_data, predicted_2),
+            compute_rmse(test_data_ours, predicted_ours_2),
+        ]
 
     return rmses
 
@@ -81,19 +93,24 @@ def get_sets(train, ours):
 
 # Compute RMSE given test set with ground truth and system predictions.
 def compute_rmse(X_test, X_pred):
-    sse = 0.
+    sse = 0.0
     for i in range(len(X_test)):
         u_test, i_test, r_test = X_test[i]
         u_pred, i_pred, r_pred = X_pred[i]
-        assert (u_test == u_pred)
-        assert (i_test == i_pred)
+        assert u_test == u_pred
+        assert i_test == i_pred
         sse += (r_test - r_pred) ** 2
-    return (sse / len(X_test)) ** .5
+    return (sse / len(X_test)) ** 0.5
 
 
 # Names of files for the five different user groups.
-names = ["our_ratings/1_all_average.csv", "our_ratings/2_all_active.csv", "our_ratings/3_all_inactive.csv",
-         "our_ratings/4_mix_12active_12inactive.csv", "our_ratings/5_mix_3active_1inactive.csv"]
+names = [
+    "our_ratings/1_all_average.csv",
+    "our_ratings/2_all_active.csv",
+    "our_ratings/3_all_inactive.csv",
+    "our_ratings/4_mix_12active_12inactive.csv",
+    "our_ratings/5_mix_3active_1inactive.csv",
+]
 
 means = {name: [[] for _ in range(2)] for name in names}
 

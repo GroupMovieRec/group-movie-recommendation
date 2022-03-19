@@ -7,11 +7,11 @@ import random
 import nmf
 import numpy as np
 
-'''
+"""
     Split datasets into test set and training set with a 20-80 split. Trains three different models 
     NMF, RDFNMF, RDFNMFPlus and computes RMSE for all users, only for users in focus group, bottom 10%
     of users, and bottom 10% of items in the test set. 
-'''
+"""
 
 
 def run_weighted_nmf():
@@ -20,7 +20,9 @@ def run_weighted_nmf():
     movielens_ratings = read_file("training_ratings.csv")
 
     # Split for movielens dataset
-    test_data_indices = random.sample(range(len(movielens_ratings)), 2 * len(movielens_ratings) // 10)
+    test_data_indices = random.sample(
+        range(len(movielens_ratings)), 2 * len(movielens_ratings) // 10
+    )
     test_data = [movielens_ratings[i] for i in test_data_indices]
     training_data = list(set(movielens_ratings) - set(test_data))
 
@@ -30,8 +32,9 @@ def run_weighted_nmf():
     our_ratings = list(set(our_ratings) - set(test_data_ours))
 
     # Extract bottom 10% of users and items from test data.
-    test_data_user_long_tail, test_data_item_long_tail = get_10_percentile_test_data(movielens_ratings + our_ratings,
-                                                                                     test_data)
+    test_data_user_long_tail, test_data_item_long_tail = get_10_percentile_test_data(
+        movielens_ratings + our_ratings, test_data
+    )
 
     # Extract list of users and movies.
     users_train, users_ours, items = get_sets(training_data, our_ratings)
@@ -47,7 +50,9 @@ def run_weighted_nmf():
     # Create and train models
     model0 = nmf.NMF(n_users=n_train + n_ours, n_items=m, n_epochs=20)
     model1 = rdfnmf.RDFNMF(n_users=n_train + n_ours, n_items=m, n_epochs=20)
-    model2 = rdfnmf_updated.RDFNMFPlus(n_users_train=n_train, n_items=m, n_users_our=n_ours, n_epochs=20)
+    model2 = rdfnmf_updated.RDFNMFPlus(
+        n_users_train=n_train, n_items=m, n_users_our=n_ours, n_epochs=20
+    )
 
     model0.train(combined)
     model1.train(combined)
@@ -74,15 +79,20 @@ def run_weighted_nmf():
     predicted_lti_2 = model2.predict(test_data_item_long_tail)
 
     # Compute RSMEs.
-    rmses = [compute_rmse(test_data, predicted_0), compute_rmse(test_data, predicted_1),
-             compute_rmse(test_data, predicted_2), compute_rmse(test_data_ours, predicted_ours_0),
-             compute_rmse(test_data_ours, predicted_ours_1), compute_rmse(test_data_ours, predicted_ours_2),
-             compute_rmse(test_data_user_long_tail, predicted_ltu_0),
-             compute_rmse(test_data_user_long_tail, predicted_ltu_1),
-             compute_rmse(test_data_user_long_tail, predicted_ltu_2),
-             compute_rmse(test_data_item_long_tail, predicted_lti_0),
-             compute_rmse(test_data_item_long_tail, predicted_lti_1),
-             compute_rmse(test_data_item_long_tail, predicted_lti_2)]
+    rmses = [
+        compute_rmse(test_data, predicted_0),
+        compute_rmse(test_data, predicted_1),
+        compute_rmse(test_data, predicted_2),
+        compute_rmse(test_data_ours, predicted_ours_0),
+        compute_rmse(test_data_ours, predicted_ours_1),
+        compute_rmse(test_data_ours, predicted_ours_2),
+        compute_rmse(test_data_user_long_tail, predicted_ltu_0),
+        compute_rmse(test_data_user_long_tail, predicted_ltu_1),
+        compute_rmse(test_data_user_long_tail, predicted_ltu_2),
+        compute_rmse(test_data_item_long_tail, predicted_lti_0),
+        compute_rmse(test_data_item_long_tail, predicted_lti_1),
+        compute_rmse(test_data_item_long_tail, predicted_lti_2),
+    ]
 
     return rmses
 
@@ -114,14 +124,14 @@ def get_sets(train, ours):
 
 # Compute RMSE given test set with ground truth and system predictions.
 def compute_rmse(X_test, X_pred):
-    sse = 0.
+    sse = 0.0
     for i in range(len(X_test)):
         u_test, i_test, r_test = X_test[i]
         u_pred, i_pred, r_pred = X_pred[i]
-        assert (u_test == u_pred)
-        assert (i_test == i_pred)
+        assert u_test == u_pred
+        assert i_test == i_pred
         sse += (r_test - r_pred) ** 2
-    return (sse / len(X_test)) ** .5
+    return (sse / len(X_test)) ** 0.5
 
 
 # Get bottom 10% of users and items from test data.
@@ -139,10 +149,14 @@ def get_10_percentile_test_data(dataset, test_data):
         else:
             ratings_per_item[i] = 1
     limit_user = len(ratings_per_user) // 10
-    ratings_per_user_sorted = dict(sorted(ratings_per_user.items(), key=lambda item: item[1]))
+    ratings_per_user_sorted = dict(
+        sorted(ratings_per_user.items(), key=lambda item: item[1])
+    )
     users_10_percent = list(ratings_per_user_sorted.keys())[:limit_user]
     limit_item = len(ratings_per_item) // 10
-    ratings_per_item_sorted = dict(sorted(ratings_per_item.items(), key=lambda item: item[1]))
+    ratings_per_item_sorted = dict(
+        sorted(ratings_per_item.items(), key=lambda item: item[1])
+    )
     item_10_percent = list(ratings_per_item_sorted.keys())[:limit_item]
 
     test_set_user_long_tail = []
